@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1041036133000",
+    "project_id": "in-bound-app",
+    "storage_bucket": "in-bound-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041036133000:android:15392161a0f1c632d0953d",
+        "android_client_info": {
+          "package_name": "tech.glactic.inbound"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_LdRfint13QacW1VZE_qdrnpZgOsPLEA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
