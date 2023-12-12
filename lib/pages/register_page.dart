@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:inbound/pages/login_page.dart';
+import 'package:inbound/pages/user_info.dart';
 import 'package:inbound/services/auth_service.dart';
+import 'package:inbound/widgets/animated_texts.dart';
 import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -23,7 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       print(passwordController.text);
       await authService.signUp(emailController.text, passwordController.text);
       // ignore: use_build_context_synchronously
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => const AuthGate(),
@@ -43,134 +46,99 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF191919),
       body: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 30),
-              child: TextFormField(
-                controller: emailController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  hintText: 'Email',
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/logo.png',
+                  width: MediaQuery.of(context).size.width * 0.45,
                 ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                left: 30,
-                right: 30,
-                top: 10,
-                bottom: 20,
-              ),
-              child: TextFormField(
-                controller: passwordController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                  hintText: 'Password',
+                const SlideInText(
+                  value: 'Sign up',
+                  size: 50,
+                  weight: FontWeight.bold,
                 ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
-                    Future.delayed(Duration(seconds: 1), () {
-                      signUp();
-                    });
-                  }
-                },
-                style: ButtonStyle(
-                  backgroundColor: const MaterialStatePropertyAll(Colors.amber),
-                  shape: MaterialStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                const SizedBox(
+                  height: 30,
+                ),
+                CustomInput(
+                  controller: emailController,
+                  hint: "Email",
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                CustomInput(
+                  hint: "Password",
+                  controller: passwordController,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 10,
                   ),
-                ),
-                child: const SizedBox(
-                  width: double.infinity,
-                  child: Center(
-                    child: Text(
-                      'Sign up',
-                      style: TextStyle(
-                        color: Colors.black,
+                  child: TextButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Processing Data')),
+                        );
+                        Future.delayed(Duration(seconds: 1), () {
+                          signUp();
+                        });
+                      }
+                    },
+                    child: Container(
+                      height: 70,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Sign up',
+                          style: GoogleFonts.gantari(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
-                  }
-                },
-                style: ButtonStyle(
-                  backgroundColor: const MaterialStatePropertyAll(Colors.white),
-                  shape: MaterialStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
+                const SizedBox(
+                  height: 15,
                 ),
-                child: const SizedBox(
-                  width: double.infinity,
-                  child: Center(
-                    child: Text(
-                      'Sign up with Google',
-                      style: TextStyle(
-                        color: Colors.black,
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
                       ),
+                    );
+                  },
+                  child: Text(
+                    "Already have an account ? Login",
+                    style: GoogleFonts.gantari(
+                      color: Colors.white,
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LoginScreen(),
-                  ),
-                );
-              },
-              child: const Text("Already have an account ? Login"),
-            ),
-          ],
+          ),
         ),
       ),
     );

@@ -11,6 +11,13 @@ class UserInfoPage extends StatefulWidget {
 }
 
 class _UserInfoPageState extends State<UserInfoPage> {
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final locationController = TextEditingController();
+  final companyController = TextEditingController();
+  final roleController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,32 +44,50 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     const SizedBox(
                       height: 30,
                     ),
-                    const CustomInput(
+                    CustomInput(
                       hint: "Full name",
+                      controller: nameController,
+                      isPassword: true,
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomInput(
-                      hint: "Email address",
+                    CustomInput(
+                      hint: "Email",
+                      controller: emailController,
+                      isPassword: true,
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomInput(
+                    CustomInput(
                       hint: "Phone number",
+                      controller: phoneController,
+                      isPassword: true,
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomInput(
-                      hint: "What you're doing ?",
+                    CustomInput(
+                      hint: "Location",
+                      controller: locationController,
+                      isPassword: true,
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    const CustomInput(
-                      hint: "Where you're working ?",
+                    CustomInput(
+                      hint: "Company",
+                      controller: companyController,
+                      isPassword: true,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    CustomInput(
+                      hint: "Your role",
+                      controller: roleController,
+                      isPassword: true,
                     ),
                     const SizedBox(
                       height: 20,
@@ -286,9 +311,13 @@ class CustomInput extends StatelessWidget {
   const CustomInput({
     super.key,
     required this.hint,
+    required this.controller,
+    this.isPassword,
   });
 
   final String hint;
+  final TextEditingController controller;
+  final bool? isPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -299,8 +328,16 @@ class CustomInput extends StatelessWidget {
         color: Colors.grey[850],
         borderRadius: BorderRadius.circular(30),
       ),
-      child: TextField(
+      child: TextFormField(
+        controller: controller,
         cursorColor: Colors.white,
+        obscureText: isPassword != null,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'This field is required';
+          }
+          return null;
+        },
         style: GoogleFonts.gantari(
           color: Colors.white,
           fontSize: 20,
