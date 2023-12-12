@@ -12,7 +12,6 @@ class ConnectionsPage extends StatefulWidget {
 
 class _ConnectionsPageState extends State<ConnectionsPage> {
   final ChatService _chatService = ChatService();
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Widget _buildRequestsList() {
     return StreamBuilder(
@@ -43,6 +42,7 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
     return Scaffold(
       backgroundColor: const Color(0xFF191919),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SlideInText(
             value: "Your Connections",
