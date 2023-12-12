@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:inbound/pages/home.dart';
 import 'package:inbound/pages/login_page.dart';
 import 'package:inbound/pages/user_info.dart';
 import 'package:flutter/material.dart';

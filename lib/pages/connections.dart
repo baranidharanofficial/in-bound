@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:inbound/services/connect_service.dart';
 import 'package:inbound/widgets/animated_texts.dart';
 import 'package:flutter/material.dart';

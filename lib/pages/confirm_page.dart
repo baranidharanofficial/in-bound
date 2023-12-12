@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:inbound/services/connect_service.dart';
 
 class ConfirmPage extends StatefulWidget {
   final String result;
@@ -10,8 +9,6 @@ class ConfirmPage extends StatefulWidget {
 }
 
 class _ConfirmPageState extends State<ConfirmPage> {
-  final ChatService _chatService = ChatService();
-
   @override
   void initState() {
     super.initState();
