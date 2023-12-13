@@ -1,7 +1,6 @@
 import 'package:inbound/pages/card_page.dart';
 import 'package:inbound/pages/connections.dart';
 import 'package:inbound/pages/settings.dart';
-import 'package:inbound/pages/user_info.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,7 +13,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Widget> screens = [
     const CardPage(),
-    const UserInfoPage(),
     const ConnectionsPage(),
     const SettingsPage(),
   ];
@@ -51,57 +49,45 @@ class _HomePageState extends State<HomePage> {
                               _currentindex = 0;
                               setState(() {});
                             },
-                            icon: ShaderMask(
-                              shaderCallback: (Rect bounds) {
-                                return const LinearGradient(
-                                  colors: [
-                                    Color.fromARGB(255, 255, 238, 186),
-                                    Color.fromARGB(255, 255, 197, 193),
-                                  ],
-                                  stops: [0.1, 0.9],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ).createShader(bounds);
-                              },
-                              child: const Icon(
-                                Icons.home,
-                                size: 32,
-                                color: Colors.white,
-                              ),
-                            ),
+                            icon: _currentindex == 0
+                                ? const SelectedIcon(
+                                    icon: Icons.home,
+                                  )
+                                : const Icon(
+                                    Icons.home_outlined,
+                                    size: 32,
+                                    color: Colors.white,
+                                  ),
                           ),
                           IconButton(
                             onPressed: () {
                               _currentindex = 1;
                               setState(() {});
                             },
-                            icon: const Icon(
-                              Icons.edit_note_outlined,
-                              size: 32,
-                              color: Colors.white,
-                            ),
+                            icon: _currentindex == 1
+                                ? const SelectedIcon(
+                                    icon: Icons.group,
+                                  )
+                                : const Icon(
+                                    Icons.group_outlined,
+                                    size: 32,
+                                    color: Colors.white,
+                                  ),
                           ),
                           IconButton(
                             onPressed: () {
                               _currentindex = 2;
                               setState(() {});
                             },
-                            icon: const Icon(
-                              Icons.group_outlined,
-                              size: 32,
-                              color: Colors.white,
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              _currentindex = 3;
-                              setState(() {});
-                            },
-                            icon: const Icon(
-                              Icons.settings_outlined,
-                              size: 32,
-                              color: Colors.white,
-                            ),
+                            icon: _currentindex == 2
+                                ? const SelectedIcon(
+                                    icon: Icons.settings,
+                                  )
+                                : const Icon(
+                                    Icons.settings_outlined,
+                                    size: 32,
+                                    color: Colors.white,
+                                  ),
                           ),
                         ],
                       ),
@@ -112,6 +98,36 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class SelectedIcon extends StatelessWidget {
+  final IconData icon;
+  const SelectedIcon({
+    required this.icon,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      shaderCallback: (Rect bounds) {
+        return const LinearGradient(
+          colors: [
+            Color.fromARGB(255, 255, 238, 186),
+            Color.fromARGB(255, 255, 197, 193),
+          ],
+          stops: [0.1, 0.9],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ).createShader(bounds);
+      },
+      child: Icon(
+        icon,
+        size: 32,
+        color: Colors.white,
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:inbound/pages/edit_user.dart';
 import 'package:inbound/pages/qr_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -43,18 +44,28 @@ class _CardPageState extends State<CardPage> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[700],
-                        borderRadius: BorderRadius.circular(50),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EditUserPage(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[800],
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Center(
+                            child: Icon(
+                          Icons.person,
+                          color: Colors.grey[50],
+                          size: 40,
+                        )),
                       ),
-                      child: Center(
-                          child: Icon(
-                        Icons.person,
-                        color: Colors.grey[50],
-                        size: 40,
-                      )),
                     ),
                     const SizedBox(
                       width: 15,
