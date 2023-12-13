@@ -1,4 +1,4 @@
-import 'package:inbound/pages/onboard_page2.dart';
+import 'package:inbound/pages/on-boarding/onboard_page2.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

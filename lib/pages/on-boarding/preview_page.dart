@@ -1,7 +1,6 @@
 import 'dart:math';
-
-import 'package:inbound/pages/login_page.dart';
-import 'package:inbound/pages/user_info.dart';
+import 'package:inbound/pages/home.dart';
+import 'package:inbound/pages/on-boarding/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -301,7 +300,7 @@ class _PreviewPageState extends State<PreviewPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
+                      builder: (context) => const HomePage(),
                     ),
                   );
                 },

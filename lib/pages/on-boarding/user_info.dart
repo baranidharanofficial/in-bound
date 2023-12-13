@@ -1,4 +1,4 @@
-import 'package:inbound/pages/preview_page.dart';
+import 'package:inbound/pages/on-boarding/preview_page.dart';
 import 'package:inbound/widgets/animated_texts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

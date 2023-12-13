@@ -1,4 +1,4 @@
-import 'package:inbound/pages/select_color.dart';
+import 'package:inbound/pages/auth/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -32,7 +32,7 @@ class _SlideToUnlockState extends State<SlideToUnlock> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const SelectColorPage(),
+          builder: (context) => const LoginScreen(),
         ),
       );
       // print('Unlocked!------$currentPosition');
@@ -67,7 +67,7 @@ class _SlideToUnlockState extends State<SlideToUnlock> {
               ),
               child: Center(
                 child: Text(
-                  'swipe to create card',
+                  'swipe to create account',
                   style: GoogleFonts.gantari(
                     color: Colors.white,
                     fontSize: 14,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inbound/pages/login_page.dart';
-import 'package:inbound/pages/user_info.dart';
+import 'package:inbound/pages/auth/login_page.dart';
+import 'package:inbound/pages/on-boarding/user_info.dart';
 import 'package:inbound/services/auth_service.dart';
 import 'package:inbound/widgets/animated_texts.dart';
 import 'package:provider/provider.dart';
@@ -29,10 +29,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const AuthGate(),
+          builder: (context) => const UserInfoPage(),
         ),
       );
     } catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(

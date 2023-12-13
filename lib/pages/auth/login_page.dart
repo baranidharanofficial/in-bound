@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inbound/pages/home.dart';
-import 'package:inbound/pages/onboard_page.dart';
-import 'package:inbound/pages/register_page.dart';
-import 'package:inbound/pages/user_info.dart';
+import 'package:inbound/pages/on-boarding/onboard_page.dart';
+import 'package:inbound/pages/auth/register_page.dart';
+import 'package:inbound/pages/on-boarding/user_info.dart';
 import 'package:inbound/services/auth_service.dart';
 import 'package:inbound/widgets/animated_texts.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const AuthGate(),
+          builder: (context) => const UserInfoPage(),
         ),
       );
     } catch (e) {
