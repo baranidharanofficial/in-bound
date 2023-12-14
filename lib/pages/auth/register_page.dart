@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inbound/pages/auth/login_page.dart';
+import 'package:inbound/pages/on-boarding/select_color.dart';
 import 'package:inbound/pages/on-boarding/user_info.dart';
 import 'package:inbound/services/auth_service.dart';
 import 'package:inbound/widgets/animated_texts.dart';
@@ -29,7 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const UserInfoPage(),
+          builder: (context) => const SelectColorPage(),
         ),
       );
     } catch (e) {

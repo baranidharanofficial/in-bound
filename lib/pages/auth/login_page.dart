@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:inbound/pages/home.dart';
 import 'package:inbound/pages/on-boarding/onboard_page.dart';
 import 'package:inbound/pages/auth/register_page.dart';
+import 'package:inbound/pages/on-boarding/select_color.dart';
 import 'package:inbound/pages/on-boarding/user_info.dart';
 import 'package:inbound/services/auth_service.dart';
 import 'package:inbound/widgets/animated_texts.dart';
@@ -33,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const UserInfoPage(),
+          builder: (context) => const SelectColorPage(),
         ),
       );
     } catch (e) {
