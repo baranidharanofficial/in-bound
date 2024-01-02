@@ -1,10 +1,15 @@
 import 'package:inbound/pages/on-boarding/preview_page.dart';
+import 'package:inbound/services/user_service.dart';
 import 'package:inbound/widgets/animated_texts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UserInfoPage extends StatefulWidget {
-  const UserInfoPage({super.key});
+  final int color;
+  const UserInfoPage({
+    super.key,
+    required this.color,
+  });
 
   @override
   State<UserInfoPage> createState() => _UserInfoPageState();
@@ -273,13 +278,29 @@ class _UserInfoPageState extends State<UserInfoPage> {
             Expanded(
               flex: 1,
               child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PreviewPage(),
-                    ),
-                  );
+                onPressed: () async {
+                  UserService userService = UserService();
+
+                  await userService.createUser({
+                    "name": "Baranidharan",
+                    "email": "baranidharan@gmail.com",
+                    "phone": "+91 63885433849",
+                    "location": "Bengaluru",
+                    "company": "BuildSuite",
+                    "role": "Software Developer",
+                    "color": 0,
+                    "portfolio": "https://baranidharan.me",
+                    "linkedin": "https://linkedin.com",
+                    "instagram": "https://instagram.com"
+                  });
+
+                  // ignore: use_build_context_synchronously
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const PreviewPage(),
+                  //   ),
+                  // );
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.95,

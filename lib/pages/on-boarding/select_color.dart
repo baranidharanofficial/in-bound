@@ -214,7 +214,7 @@ class _SelectColorPageState extends State<SelectColorPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const UserInfoPage(),
+                      builder: (context) => UserInfoPage(color: _currentColor),
                     ),
                   );
                 },

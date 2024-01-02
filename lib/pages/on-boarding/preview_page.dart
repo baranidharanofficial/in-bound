@@ -328,7 +328,9 @@ class _PreviewPageState extends State<PreviewPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const UserInfoPage(),
+                      builder: (context) => const UserInfoPage(
+                        color: 0,
+                      ),
                     ),
                   );
                 },
