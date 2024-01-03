@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:inbound/services/local_storage.dart';
 
 class AuthService extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -14,6 +15,8 @@ class AuthService extends ChangeNotifier {
         email: email,
         password: password,
       );
+
+      localStoreSetUId(userCredential.user!.uid);
 
       _firebaseFirestore.collection('users').doc(userCredential.user!.uid).set({
         'uid': userCredential.user!.uid,

@@ -1,4 +1,5 @@
 import 'package:inbound/pages/on-boarding/preview_page.dart';
+import 'package:inbound/services/local_storage.dart';
 import 'package:inbound/services/user_service.dart';
 import 'package:inbound/widgets/animated_texts.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,10 @@ class _UserInfoPageState extends State<UserInfoPage> {
   final locationController = TextEditingController();
   final companyController = TextEditingController();
   final roleController = TextEditingController();
+  final linkedinController = TextEditingController();
+  final instaController = TextEditingController();
+  final xController = TextEditingController();
+  final portfolioController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +57,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     CustomInput(
                       hint: "Full name",
                       controller: nameController,
-                      isPassword: true,
                     ),
                     const SizedBox(
                       height: 15,
@@ -60,7 +64,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     CustomInput(
                       hint: "Email",
                       controller: emailController,
-                      isPassword: true,
                     ),
                     const SizedBox(
                       height: 15,
@@ -68,7 +71,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     CustomInput(
                       hint: "Phone number",
                       controller: phoneController,
-                      isPassword: true,
                     ),
                     const SizedBox(
                       height: 15,
@@ -76,7 +78,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     CustomInput(
                       hint: "Location",
                       controller: locationController,
-                      isPassword: true,
                     ),
                     const SizedBox(
                       height: 15,
@@ -84,7 +85,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     CustomInput(
                       hint: "Company",
                       controller: companyController,
-                      isPassword: true,
                     ),
                     const SizedBox(
                       height: 15,
@@ -92,7 +92,6 @@ class _UserInfoPageState extends State<UserInfoPage> {
                     CustomInput(
                       hint: "Your role",
                       controller: roleController,
-                      isPassword: true,
                     ),
                     const SizedBox(
                       height: 20,
@@ -151,9 +150,10 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                           const SizedBox(
                                             width: 15,
                                           ),
-                                          const Expanded(
+                                          Expanded(
                                             child: CustomInput2(
                                               hint: "LinkedIn profile link",
+                                              controller: linkedinController,
                                             ),
                                           )
                                         ],
@@ -176,8 +176,9 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                           const SizedBox(
                                             width: 15,
                                           ),
-                                          const Expanded(
+                                          Expanded(
                                             child: CustomInput2(
+                                              controller: instaController,
                                               hint: "Insta profile link",
                                             ),
                                           )
@@ -205,9 +206,36 @@ class _UserInfoPageState extends State<UserInfoPage> {
                                           const SizedBox(
                                             width: 15,
                                           ),
-                                          const Expanded(
+                                          Expanded(
                                             child: CustomInput2(
+                                              controller: xController,
                                               hint: "X profile link",
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.person,
+                                            color: Colors.amber,
+                                            size: 24,
+                                          ),
+                                          const SizedBox(
+                                            width: 15,
+                                          ),
+                                          Expanded(
+                                            child: CustomInput2(
+                                              hint: "Portfolio link",
+                                              controller: portfolioController,
                                             ),
                                           )
                                         ],
@@ -282,25 +310,26 @@ class _UserInfoPageState extends State<UserInfoPage> {
                   UserService userService = UserService();
 
                   await userService.createUser({
-                    "name": "Baranidharan",
-                    "email": "baranidharan@gmail.com",
-                    "phone": "+91 63885433849",
-                    "location": "Bengaluru",
-                    "company": "BuildSuite",
-                    "role": "Software Developer",
-                    "color": 0,
-                    "portfolio": "https://baranidharan.me",
-                    "linkedin": "https://linkedin.com",
-                    "instagram": "https://instagram.com"
+                    "uid": await localStoreGetUId(),
+                    "name": nameController.text,
+                    "email": emailController.text,
+                    "phone": phoneController.text,
+                    "location": locationController.text,
+                    "company": companyController.text,
+                    "role": roleController.text,
+                    "color": widget.color,
+                    "portfolio": portfolioController.text,
+                    "linkedin": linkedinController.text,
+                    "instagram": instaController.text,
                   });
 
                   // ignore: use_build_context_synchronously
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const PreviewPage(),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PreviewPage(),
+                    ),
+                  );
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.95,
@@ -379,12 +408,10 @@ class CustomInput extends StatelessWidget {
 }
 
 class CustomInput2 extends StatelessWidget {
-  const CustomInput2({
-    super.key,
-    required this.hint,
-  });
+  const CustomInput2({super.key, required this.hint, required this.controller});
 
   final String hint;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -395,6 +422,7 @@ class CustomInput2 extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
       ),
       child: TextField(
+        controller: controller,
         cursorColor: Colors.white,
         style: GoogleFonts.gantari(
           color: Colors.white,
