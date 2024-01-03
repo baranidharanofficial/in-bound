@@ -1,12 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inbound/bloc/user_bloc.dart';
+import 'package:inbound/bloc/user_event.dart';
 import 'package:inbound/pages/home.dart';
 import 'package:inbound/pages/on-boarding/onboard_page.dart';
 import 'package:inbound/pages/auth/register_page.dart';
 import 'package:inbound/pages/on-boarding/select_color.dart';
 import 'package:inbound/pages/on-boarding/user_info.dart';
 import 'package:inbound/services/auth_service.dart';
+import 'package:inbound/services/local_storage.dart';
 import 'package:inbound/widgets/animated_texts.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +26,31 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  fetchUserData() async {
+    final userBloc = BlocProvider.of<UserBloc>(context);
+    userBloc.add(FetchUser(await localStoreGetUId()));
+
+    final currentState = userBloc.state;
+
+    if (currentState is UserLoaded) {
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    } else if (currentState is UserError) {
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SelectColorPage(),
+        ),
+      );
+    }
+  }
+
   Future<void> signIn() async {
     final authService = Provider.of<AuthService>(context, listen: false);
 
@@ -30,13 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
       print(passwordController.text);
       await authService.signIn(emailController.text, passwordController.text);
 
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const SelectColorPage(),
-        ),
-      );
+      await fetchUserData();
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -161,7 +184,13 @@ class AuthGate extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const HomePage();
+            return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+              if (state is UserLoaded) {
+                return const HomePage();
+              }
+
+              return const SelectColorPage();
+            });
           } else {
             return const OnBoardPage();
           }

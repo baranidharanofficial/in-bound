@@ -151,7 +151,9 @@ class _SelectColorPageState extends State<SelectColorPage> {
                             begin: -0.05,
                             end: 0,
                           )
-                          .shimmer(),
+                          .shimmer(
+                            duration: const Duration(seconds: 3),
+                          ),
                     ],
                   ),
                   const SizedBox(
@@ -199,7 +201,9 @@ class _SelectColorPageState extends State<SelectColorPage> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                             ),
-                          ).animate().shimmer(),
+                          ).animate().shimmer(
+                                duration: const Duration(seconds: 3),
+                              ),
                         );
                       },
                     ),
