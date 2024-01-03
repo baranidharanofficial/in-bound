@@ -1,12 +1,15 @@
 import 'dart:math';
+import 'package:inbound/models/user.dart';
 import 'package:inbound/pages/home.dart';
 import 'package:inbound/pages/on-boarding/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:inbound/services/user_service.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class PreviewPage extends StatefulWidget {
-  const PreviewPage({super.key});
+  final User? user;
+  const PreviewPage({super.key, required this.user});
 
   @override
   State<PreviewPage> createState() => _PreviewPageState();
@@ -92,7 +95,7 @@ class _PreviewPageState extends State<PreviewPage> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "Baranidharan",
+                                              widget.user!.name,
                                               textAlign: TextAlign.left,
                                               style: GoogleFonts.gantari(
                                                 fontSize: 30,
@@ -132,8 +135,7 @@ class _PreviewPageState extends State<PreviewPage> {
                                         ),
                                         child: Center(
                                           child: QrImageView(
-                                            data:
-                                                '81lz2GPiXwMSFdaCNU5pne7RJF13',
+                                            data: widget.user!.uid,
                                             version: QrVersions.auto,
                                             gapless: false,
                                             size: MediaQuery.of(context)
@@ -192,7 +194,7 @@ class _PreviewPageState extends State<PreviewPage> {
                                         ),
                                       ),
                                       Text(
-                                        "Software Developer",
+                                        widget.user!.role,
                                         style: GoogleFonts.gantari(
                                           fontSize: 50.0,
                                           fontWeight: FontWeight.w600,
@@ -202,7 +204,7 @@ class _PreviewPageState extends State<PreviewPage> {
                                         height: 8,
                                       ),
                                       Text(
-                                        "at BuildSuite",
+                                        "at ${widget.user!.company}",
                                         style: GoogleFonts.gantari(
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.w600,
@@ -265,7 +267,7 @@ class _PreviewPageState extends State<PreviewPage> {
                                         height: 8,
                                       ),
                                       Text(
-                                        "baranidharanofficial@gmail.com",
+                                        widget.user!.email,
                                         style: GoogleFonts.gantari(
                                           fontSize: 12.0,
                                           fontWeight: FontWeight.w600,
@@ -276,7 +278,7 @@ class _PreviewPageState extends State<PreviewPage> {
                                         height: 4,
                                       ),
                                       Text(
-                                        "+91 6385433849",
+                                        widget.user!.phone,
                                         style: GoogleFonts.gantari(
                                           fontSize: 12.0,
                                           fontWeight: FontWeight.w600,
@@ -296,13 +298,20 @@ class _PreviewPageState extends State<PreviewPage> {
               ),
               const Spacer(),
               TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                    ),
-                  );
+                onPressed: () async {
+                  UserService userService = UserService();
+
+                  User? user = await userService.createUser(widget.user!);
+
+                  if (user != null) {
+                    // ignore: use_build_context_synchronously
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(user: user),
+                      ),
+                    );
+                  }
                 },
                 child: Container(
                   height: 80,

@@ -20,15 +20,19 @@ class UserApi {
     }
   }
 
-  Future<APIResponse> createUser(dynamic userData) async {
+  Future<APIResponse> createUser(userData) async {
     final url = Uri.parse('https://inbound-5gka.onrender.com/users');
 
-    print(userData);
+    print(jsonEncode(userData));
 
     try {
-      final response = await http
-          .post(url, body: jsonEncode(userData))
-          .timeout(const Duration(seconds: 30));
+      final response = await http.post(
+        url,
+        body: jsonEncode(userData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
       debugPrint('API Response: ${response.body}');
       return APIResponse(
         statusCode: response.statusCode,

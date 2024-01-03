@@ -1,10 +1,12 @@
+import 'package:inbound/models/user.dart';
 import 'package:inbound/pages/card_page.dart';
 import 'package:inbound/pages/connections.dart';
 import 'package:inbound/pages/settings.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final User? user;
+  const HomePage({super.key, required this.user});
 
   @override
   State<HomePage> createState() => _HomePageState();

@@ -1,4 +1,6 @@
 class User {
+  String? id;
+  String uid;
   String name;
   String email;
   String phone;
@@ -9,14 +11,16 @@ class User {
   String portfolio;
   String linkedin;
   String instagram;
-  String facebook;
-  String github;
-  String quora;
-  String medium;
-  String stack;
-  String x;
+  String? facebook;
+  String? github;
+  String? quora;
+  String? medium;
+  String? stack;
+  String? x;
 
   User({
+    this.id,
+    required this.uid,
     required this.name,
     required this.email,
     required this.phone,
@@ -27,16 +31,18 @@ class User {
     required this.portfolio,
     required this.linkedin,
     required this.instagram,
-    required this.facebook,
-    required this.github,
-    required this.quora,
-    required this.medium,
-    required this.stack,
-    required this.x,
+    this.facebook,
+    this.github,
+    this.quora,
+    this.medium,
+    this.stack,
+    this.x,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
+      id: json['_id'],
+      uid: json['uid'],
       name: json['name'],
       email: json['email'],
       phone: json['phone'],
@@ -47,17 +53,19 @@ class User {
       portfolio: json['portfolio'],
       linkedin: json['linkedin'],
       instagram: json['instagram'],
-      facebook: json['facebook'],
-      github: json['github'],
-      quora: json['quora'],
-      medium: json['medium'],
-      stack: json['stack'],
-      x: json['x'],
+      facebook: json['facebook'] ?? "",
+      github: json['github'] ?? "",
+      quora: json['quora'] ?? "",
+      medium: json['medium'] ?? "",
+      stack: json['stack'] ?? "",
+      x: json['x'] ?? "",
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
+      'uid': uid,
       'name': name,
       'email': email,
       'phone': phone,

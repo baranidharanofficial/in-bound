@@ -23,13 +23,19 @@ class UserService extends ChangeNotifier {
     return user;
   }
 
-  Future<dynamic> createUser(dynamic userData) async {
+  Future<User?> createUser(User userData) async {
+    User? user;
     debugPrint("Create User");
 
     var response = await userApi.createUser(userData);
 
     var data = jsonDecode(response.data);
     print(data);
+
+    if (response.statusCode == 201) {
+      user = User.fromJson(data['user']);
+      return user;
+    }
 
     return null;
   }

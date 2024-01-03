@@ -277,7 +277,9 @@ class _EditUserPageState extends State<EditUserPage> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const HomePage(
+                        user: null,
+                      ),
                     ),
                   );
                 },

@@ -1,6 +1,6 @@
+import 'package:inbound/models/user.dart';
 import 'package:inbound/pages/on-boarding/preview_page.dart';
 import 'package:inbound/services/local_storage.dart';
-import 'package:inbound/services/user_service.dart';
 import 'package:inbound/widgets/animated_texts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -307,27 +307,27 @@ class _UserInfoPageState extends State<UserInfoPage> {
               flex: 1,
               child: TextButton(
                 onPressed: () async {
-                  UserService userService = UserService();
+                  User data = User(
+                    uid: await localStoreGetUId(),
+                    name: nameController.text,
+                    email: emailController.text,
+                    phone: phoneController.text,
+                    location: locationController.text,
+                    company: companyController.text,
+                    role: roleController.text,
+                    color: widget.color,
+                    portfolio: portfolioController.text,
+                    linkedin: linkedinController.text,
+                    instagram: instaController.text,
+                  );
 
-                  await userService.createUser({
-                    "uid": await localStoreGetUId(),
-                    "name": nameController.text,
-                    "email": emailController.text,
-                    "phone": phoneController.text,
-                    "location": locationController.text,
-                    "company": companyController.text,
-                    "role": roleController.text,
-                    "color": widget.color,
-                    "portfolio": portfolioController.text,
-                    "linkedin": linkedinController.text,
-                    "instagram": instaController.text,
-                  });
+                  print(data);
 
                   // ignore: use_build_context_synchronously
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PreviewPage(),
+                      builder: (context) => PreviewPage(user: data),
                     ),
                   );
                 },
