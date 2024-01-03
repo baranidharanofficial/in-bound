@@ -39,4 +39,21 @@ class UserService extends ChangeNotifier {
 
     return null;
   }
+
+  Future<User?> getUserById(userId) async {
+    User? user;
+    debugPrint("Get User");
+
+    var response = await userApi.getUserByID(userId);
+
+    var data = jsonDecode(response.data);
+
+    if (response.statusCode == 200) {
+      user = User.fromJson(data);
+      print(data);
+      return user;
+    }
+
+    return null;
+  }
 }

@@ -1,3 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inbound/bloc/user_bloc.dart';
+import 'package:inbound/bloc/user_event.dart';
 import 'package:inbound/services/connect_service.dart';
 import 'package:inbound/widgets/animated_texts.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +53,33 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
             weight: FontWeight.bold,
           ),
           _buildRequestsList(),
+          BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              if (state is UserLoading) {
+                return const CircularProgressIndicator();
+              } else if (state is UserLoaded) {
+                final user = state.user;
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SlideInText(
+                      value: 'Name: ${user.name}',
+                      size: 20,
+                      weight: FontWeight.bold,
+                    ),
+                    // Display other user details as needed
+                  ],
+                );
+              } else if (state is UserError) {
+                return const SlideInText(
+                  value: 'Failed',
+                  size: 20,
+                  weight: FontWeight.bold,
+                );
+              }
+              return const Text('None');
+            },
+          ),
         ],
       ),
     );

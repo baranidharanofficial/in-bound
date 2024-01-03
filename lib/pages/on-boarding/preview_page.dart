@@ -1,4 +1,7 @@
 import 'dart:math';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inbound/bloc/user_bloc.dart';
+import 'package:inbound/bloc/user_event.dart';
 import 'package:inbound/models/user.dart';
 import 'package:inbound/pages/home.dart';
 import 'package:inbound/pages/on-boarding/user_info.dart';
@@ -29,6 +32,18 @@ class _PreviewPageState extends State<PreviewPage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  fetchUserData(User user) {
+    final userBloc = BlocProvider.of<UserBloc>(context);
+    userBloc.add(FetchUser(user.uid));
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomePage(),
+      ),
+    );
   }
 
   @override
@@ -304,13 +319,7 @@ class _PreviewPageState extends State<PreviewPage> {
                   User? user = await userService.createUser(widget.user!);
 
                   if (user != null) {
-                    // ignore: use_build_context_synchronously
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HomePage(user: user),
-                      ),
-                    );
+                    fetchUserData(user);
                   }
                 },
                 child: Container(

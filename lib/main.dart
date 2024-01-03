@@ -1,9 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inbound/bloc/user_bloc.dart';
+import 'package:inbound/bloc/user_event.dart';
 import 'package:inbound/firebase_options.dart';
 import 'package:inbound/pages/auth/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inbound/services/auth_service.dart';
+import 'package:inbound/services/local_storage.dart';
+import 'package:inbound/services/user_service.dart';
 import 'package:inbound/widgets/animated_texts.dart';
 import 'package:provider/provider.dart';
 
@@ -30,16 +35,21 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final UserService _userService = UserService();
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
-        useMaterial3: true,
+    return BlocProvider(
+      create: (context) => UserBloc(_userService),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
+          useMaterial3: true,
+        ),
+        home: const SplashScreen(),
       ),
-      home: const SplashScreen(),
     );
   }
 }
@@ -57,6 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 2), () {
+        fetchUserData();
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -65,6 +76,11 @@ class _SplashScreenState extends State<SplashScreen> {
         );
       });
     });
+  }
+
+  fetchUserData() async {
+    final userBloc = BlocProvider.of<UserBloc>(context);
+    userBloc.add(FetchUser(await localStoreGetUId()));
   }
 
   @override

@@ -6,7 +6,7 @@ import 'package:inbound/models/user.dart';
 
 class UserApi {
   Future<APIResponse> getUserByID(String userID) async {
-    final url = Uri.parse('https://inbound-5gka.onrender.com/users');
+    final url = Uri.parse('https://inbound-5gka.onrender.com/users/$userID');
 
     try {
       final response = await http.get(url).timeout(const Duration(seconds: 30));
