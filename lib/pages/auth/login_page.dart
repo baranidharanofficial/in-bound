@@ -7,7 +7,6 @@ import 'package:inbound/bloc/user_event.dart';
 import 'package:inbound/pages/home.dart';
 import 'package:inbound/pages/on-boarding/onboard_page.dart';
 import 'package:inbound/pages/auth/register_page.dart';
-import 'package:inbound/pages/on-boarding/select_color.dart';
 import 'package:inbound/pages/on-boarding/user_info.dart';
 import 'package:inbound/services/auth_service.dart';
 import 'package:inbound/services/local_storage.dart';
@@ -30,25 +29,13 @@ class _LoginScreenState extends State<LoginScreen> {
     final userBloc = BlocProvider.of<UserBloc>(context);
     userBloc.add(FetchUser(await localStoreGetUId()));
 
-    final currentState = userBloc.state;
-
-    if (currentState is UserLoaded) {
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomePage(),
-        ),
-      );
-    } else if (currentState is UserError) {
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const SelectColorPage(),
-        ),
-      );
-    }
+    // ignore: use_build_context_synchronously
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AuthGate(),
+      ),
+    );
   }
 
   Future<void> signIn() async {
@@ -180,6 +167,7 @@ class AuthGate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF191919),
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -187,9 +175,13 @@ class AuthGate extends StatelessWidget {
             return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
               if (state is UserLoaded) {
                 return const HomePage();
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                );
               }
-
-              return const SelectColorPage();
             });
           } else {
             return const OnBoardPage();

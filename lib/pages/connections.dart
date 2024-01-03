@@ -6,7 +6,9 @@ import 'package:inbound/widgets/animated_texts.dart';
 import 'package:flutter/material.dart';
 
 class ConnectionsPage extends StatefulWidget {
-  const ConnectionsPage({super.key});
+  const ConnectionsPage({
+    super.key,
+  });
 
   @override
   State<ConnectionsPage> createState() => _ConnectionsPageState();
@@ -15,9 +17,9 @@ class ConnectionsPage extends StatefulWidget {
 class _ConnectionsPageState extends State<ConnectionsPage> {
   final ChatService _chatService = ChatService();
 
-  Widget _buildRequestsList() {
+  Widget _buildRequestsList(String uid) {
     return StreamBuilder(
-      stream: _chatService.getConnectionRequest('81lz2GPiXwMSFdaCNU5pne7RJF13'),
+      stream: _chatService.getConnectionRequest(uid),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Text('Error');
@@ -46,13 +48,6 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SlideInText(
-            value: "Your Connections",
-            size: 30,
-            align: TextAlign.center,
-            weight: FontWeight.bold,
-          ),
-          _buildRequestsList(),
           BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
               if (state is UserLoading) {
@@ -62,6 +57,13 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const SlideInText(
+                      value: "Your Connections",
+                      size: 30,
+                      align: TextAlign.center,
+                      weight: FontWeight.bold,
+                    ),
+                    _buildRequestsList(state.user.uid),
                     SlideInText(
                       value: 'Name: ${user.name}',
                       size: 20,

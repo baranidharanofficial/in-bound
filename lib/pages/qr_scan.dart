@@ -110,20 +110,19 @@ class _QRScanPageState extends State<QRScanPage> {
 
     controller.scannedDataStream.listen((scanData) {
       setState(() async {
-        if (result == null) {
+        if (result == null && scanData.code != null) {
           result = scanData;
-          var user =
-              await _chatService.getUserInfo('qRfXH6m93GY0nOly09dDIKXkZOC3');
-          _navigateToScannedDataPage(user['email'] ?? "Error");
+          print(result);
+          _navigateToScannedDataPage(result!.code!);
         }
       });
     });
   }
 
-  void sendConnect() async {
+  void sendConnect(String uid) async {
     print("REQUEST-------------------------");
     await _chatService.sendConnectionRequest(
-      '81lz2GPiXwMSFdaCNU5pne7RJF13',
+      uid,
       'Connected',
     );
   }
@@ -136,7 +135,7 @@ class _QRScanPageState extends State<QRScanPage> {
         builder: (context) => ConfirmPage(result: scannedData),
       ),
     );
-    sendConnect();
+    sendConnect(scannedData);
   }
 
   @override
