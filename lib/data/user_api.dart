@@ -9,7 +9,8 @@ class UserApi {
     final url = Uri.parse('https://inbound-5gka.onrender.com/users/$userID');
 
     try {
-      final response = await http.get(url).timeout(const Duration(seconds: 30));
+      final response =
+          await http.get(url).timeout(const Duration(seconds: 120));
       debugPrint('API Response: ${response.body}');
       return APIResponse(
         statusCode: response.statusCode,
@@ -29,6 +30,28 @@ class UserApi {
       final response = await http.post(
         url,
         body: jsonEncode(userData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+      debugPrint('API Response: ${response.body}');
+      return APIResponse(
+        statusCode: response.statusCode,
+        data: response.body,
+      );
+    } catch (e) {
+      return handleAPIError(e);
+    }
+  }
+
+  Future<APIResponse> addConnect(userId, connectId) async {
+    final url = Uri.parse(
+        'https://inbound-5gka.onrender.com/users/$userId/add-connect/$connectId');
+
+    try {
+      final response = await http.post(
+        url,
+        body: jsonEncode({}),
         headers: {
           'Content-Type': 'application/json',
         },

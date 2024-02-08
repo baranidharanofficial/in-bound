@@ -178,7 +178,7 @@ class AuthGate extends StatelessWidget {
               } else {
                 return const Center(
                   child: CircularProgressIndicator(
-                    color: Colors.white,
+                    color: Colors.lightGreen,
                   ),
                 );
               }

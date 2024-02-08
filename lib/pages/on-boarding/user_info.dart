@@ -307,29 +307,36 @@ class _UserInfoPageState extends State<UserInfoPage> {
               flex: 1,
               child: TextButton(
                 onPressed: () async {
-                  User data = User(
-                    uid: await localStoreGetUId(),
-                    name: nameController.text,
-                    email: emailController.text,
-                    phone: phoneController.text,
-                    location: locationController.text,
-                    company: companyController.text,
-                    role: roleController.text,
-                    color: widget.color,
-                    portfolio: portfolioController.text,
-                    linkedin: linkedinController.text,
-                    instagram: instaController.text,
-                  );
+                  String uid = await localStoreGetUId();
 
-                  print(data);
+                  print(uid);
 
-                  // ignore: use_build_context_synchronously
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PreviewPage(user: data),
-                    ),
-                  );
+                  if (uid.isNotEmpty) {
+                    User data = User(
+                      uid: uid,
+                      name: nameController.text,
+                      email: emailController.text,
+                      phone: phoneController.text,
+                      location: locationController.text,
+                      company: companyController.text,
+                      role: roleController.text,
+                      color: widget.color,
+                      portfolio: portfolioController.text,
+                      linkedin: linkedinController.text,
+                      instagram: instaController.text,
+                      connects: [],
+                    );
+
+                    print(data);
+
+                    // ignore: use_build_context_synchronously
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PreviewPage(user: data),
+                      ),
+                    );
+                  }
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.95,

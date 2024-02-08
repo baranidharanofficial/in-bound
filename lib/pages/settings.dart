@@ -1,4 +1,5 @@
 import 'package:inbound/services/auth_service.dart';
+import 'package:inbound/services/local_storage.dart';
 import 'package:inbound/widgets/animated_texts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,8 +16,10 @@ class _SettingsPageState extends State<SettingsPage> {
     final authService = Provider.of<AuthService>(context, listen: false);
 
     try {
+      localStoreSetUId("");
       await authService.signOut();
     } catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(

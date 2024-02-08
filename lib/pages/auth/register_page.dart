@@ -79,6 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 CustomInput(
                   hint: "Password",
+                  isPassword: true,
                   controller: passwordController,
                 ),
                 const SizedBox(

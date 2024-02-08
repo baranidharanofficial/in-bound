@@ -56,4 +56,23 @@ class UserService extends ChangeNotifier {
 
     return null;
   }
+
+  Future<User?> addConnect(userId, connectId) async {
+    // User? user;
+    debugPrint("Add Connection");
+
+    var response = await userApi.addConnect(userId, connectId);
+
+    var data = jsonDecode(response.data);
+
+    print(data);
+
+    // if (response.statusCode == 200) {
+    //   user = User.fromJson(data);
+    //   print(data);
+    //   return user;
+    // }
+
+    return null;
+  }
 }

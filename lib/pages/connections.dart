@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inbound/bloc/user_bloc.dart';
 import 'package:inbound/bloc/user_event.dart';
-import 'package:inbound/services/connect_service.dart';
+// import 'package:inbound/services/connect_service.dart';
 import 'package:inbound/widgets/animated_texts.dart';
 import 'package:flutter/material.dart';
 
@@ -15,31 +15,30 @@ class ConnectionsPage extends StatefulWidget {
 }
 
 class _ConnectionsPageState extends State<ConnectionsPage> {
-  final ChatService _chatService = ChatService();
+  // final ChatService _chatService = ChatService();
 
-  Widget _buildRequestsList(String uid) {
-    return StreamBuilder(
-      stream: _chatService.getConnectionRequest(uid),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return const Text('Error');
-        }
+  // Widget _buildRequestsList(String uid) {
+  //   return StreamBuilder(
+  //     stream: _chatService.getConnectionRequest(uid),
+  //     builder: (context, snapshot) {
+  //       if (snapshot.hasError) {
+  //         return const Text('Error');
+  //       }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text('Loading...');
-        }
+  //       if (snapshot.connectionState == ConnectionState.waiting) {
+  //         return const Text('Loading...');
+  //       }
 
-        debugPrint("${snapshot.data!.docs.length}---------");
-
-        return SlideInText(
-          value: 'Requests: ${snapshot.data!.docs.length}',
-          size: 30,
-          align: TextAlign.center,
-          weight: FontWeight.bold,
-        );
-      },
-    );
-  }
+  //       return SlideInText(
+  //         value:
+  //             'Requests: ${snapshot.data!.docs.isNotEmpty ? snapshot.data!.docs[0].get('id') : 'Empty'}',
+  //         size: 20,
+  //         align: TextAlign.center,
+  //         weight: FontWeight.bold,
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +57,18 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SlideInText(
-                      value: "Your Connections",
+                      value: "Your Connects",
                       size: 30,
                       align: TextAlign.center,
                       weight: FontWeight.bold,
                     ),
-                    _buildRequestsList(state.user.uid),
+                    SlideInText(
+                      value: state.user.connects.length.toString(),
+                      size: 30,
+                      align: TextAlign.center,
+                      weight: FontWeight.bold,
+                    ),
+
                     SlideInText(
                       value: 'Name: ${user.name}',
                       size: 20,

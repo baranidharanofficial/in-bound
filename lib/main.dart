@@ -39,8 +39,16 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => UserBloc(_userService),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UserBloc>(
+          create: (context) => UserBloc(_userService),
+        ),
+        BlocProvider<SenderBloc>(
+          create: (context) => SenderBloc(_userService),
+        ),
+        // Add more BlocProviders as needed
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',

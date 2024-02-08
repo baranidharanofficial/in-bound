@@ -6,12 +6,35 @@ class ChatService extends ChangeNotifier {
   // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> sendConnectionRequest(String receiverId, String message) async {
+  Future<void> sendConnectionRequest(
+      String receiverId, String senderId, String message) async {
     await _firestore
         .collection('connect_rooms')
         .doc(receiverId)
         .collection('requests')
-        .add({'id': 'Connection Request'});
+        .add({'id': senderId});
+  }
+
+  Future<void> deleteRequestsCollection(String userId) async {
+    try {
+      print(userId);
+      await _firestore
+          .collection('connect_rooms')
+          .doc(userId)
+          .collection('requests')
+          .get()
+          .then((querySnapshot) {
+        print(querySnapshot.docs.length);
+        for (var doc in querySnapshot.docs) {
+          print(doc.toString());
+          doc.reference.delete();
+        }
+      });
+      print('Requests collection deleted successfully.');
+    } catch (error) {
+      print('Error deleting requests collection: $error');
+      throw error;
+    }
   }
 
   Stream<QuerySnapshot> getConnectionRequest(String userId) {

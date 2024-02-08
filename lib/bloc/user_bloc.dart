@@ -24,3 +24,26 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   Stream<UserState> mapEventToState(UserEvent event, userId) async* {}
 }
+
+class SenderBloc extends Bloc<SenderEvent, SenderState> {
+  final UserService _userService;
+
+  SenderBloc(this._userService) : super(SenderInitial()) {
+    on<FetchSender>((event, emit) async {
+      // Handle FetchUser event here
+      try {
+        final sender = await _userService.getUserById(event.senderId);
+        print(sender);
+        if (sender != null) {
+          emit(SenderLoaded(sender));
+        } else {
+          emit(SenderError());
+        }
+      } catch (error) {
+        emit(SenderError());
+      }
+    });
+  }
+
+  Stream<UserState> mapEventToState(UserEvent event, userId) async* {}
+}

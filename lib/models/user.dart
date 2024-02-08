@@ -17,6 +17,7 @@ class User {
   String? medium;
   String? stack;
   String? x;
+  List<String> connects; // List of friend IDs
 
   User({
     this.id,
@@ -37,6 +38,7 @@ class User {
     this.medium,
     this.stack,
     this.x,
+    required this.connects,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -59,12 +61,12 @@ class User {
       medium: json['medium'] ?? "",
       stack: json['stack'] ?? "",
       x: json['x'] ?? "",
+      connects: List<String>.from(json['connects'] ?? []),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'uid': uid,
       'name': name,
       'email': email,
@@ -82,6 +84,7 @@ class User {
       'medium': medium,
       'stack': stack,
       'x': x,
+      'connects': connects,
     };
   }
 }

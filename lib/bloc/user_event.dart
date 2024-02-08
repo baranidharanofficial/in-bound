@@ -21,3 +21,25 @@ class UserLoaded extends UserState {
 }
 
 class UserError extends UserState {}
+
+abstract class SenderEvent {}
+
+class FetchSender extends SenderEvent {
+  final String senderId;
+
+  FetchSender(this.senderId);
+}
+
+abstract class SenderState {}
+
+class SenderInitial extends SenderState {}
+
+class SenderLoading extends SenderState {}
+
+class SenderLoaded extends SenderState {
+  final User sender;
+
+  SenderLoaded(this.sender);
+}
+
+class SenderError extends SenderState {}

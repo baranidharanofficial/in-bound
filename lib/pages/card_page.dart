@@ -34,7 +34,9 @@ class _CardPageState extends State<CardPage> {
       backgroundColor: const Color(0xFF191919),
       body: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
         if (state is UserLoading) {
-          return const CircularProgressIndicator();
+          return const CircularProgressIndicator(
+            color: Colors.green,
+          );
         } else if (state is UserLoaded) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,

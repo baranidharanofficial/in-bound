@@ -37,6 +37,8 @@ class AuthService extends ChangeNotifier {
         password: password,
       );
 
+      localStoreSetUId(userCredential.user!.uid);
+
       _firebaseFirestore.collection('users').doc(userCredential.user!.uid).set({
         'uid': userCredential.user!.uid,
         'email': email,
