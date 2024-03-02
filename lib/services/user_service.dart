@@ -109,10 +109,13 @@ class UserService extends ChangeNotifier {
   }
 
   Future<bool> addUserToCategory(
-      String userId, String connectId, String category) async {
+      String userId, String connectId, List<String> categories) async {
     debugPrint("Add User To a Category");
 
-    var response = await userApi.addUserToCategory(userId, connectId, category);
+    print(categories);
+
+    var response =
+        await userApi.addUserToCategory(userId, connectId, categories);
 
     var data = jsonDecode(response.data);
     print(data);

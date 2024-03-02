@@ -40,7 +40,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     on<AddCategory>((event, emit) async {
       // Handle FetchUser event here
-      emit(UserLoading());
+      // emit(UserLoading());
       try {
         final isCategoryAdded =
             await _userService.addCategory(event.user.id!, event.category);
@@ -59,12 +59,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     on<AddUserToCategory>((event, emit) async {
       // Handle FetchUser event here
-      emit(UserLoading());
+      // emit(UserLoading());
       try {
         final isAdded = await _userService.addUserToCategory(
           event.user.id!,
           event.connectId,
-          event.category,
+          event.categories,
         );
         print(isAdded);
         if (isAdded) {

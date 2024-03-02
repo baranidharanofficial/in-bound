@@ -79,8 +79,10 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
                                 onPressed: () {
                                   if (categoryController.text.isNotEmpty) {
                                     addCategory(
-                                        state.user, categoryController.text);
-                                    Navigator.pop(context);
+                                      state.user,
+                                      categoryController.text.trim(),
+                                    );
+                                    // Navigator.pop(context);
                                   }
                                 },
                                 style: FilledButton.styleFrom(
@@ -232,6 +234,7 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
                               children: [
                                 TabBar(
                                   isScrollable: true,
+                                  tabAlignment: TabAlignment.start,
                                   padding: EdgeInsets.zero,
                                   labelStyle: GoogleFonts.poppins(
                                     color: Colors.black,
@@ -580,11 +583,22 @@ class AddUserToCategoryBS extends StatefulWidget {
 }
 
 class _AddUserToCategoryBSState extends State<AddUserToCategoryBS> {
-  String? selectedCategory;
+  List<String> selectedCategories = [];
 
-  addUserToCategory(User user, String connectId, String category) async {
+  addUserToCategory(
+      User user, String connectId, List<String> categories) async {
     final userBloc = BlocProvider.of<UserBloc>(context);
-    userBloc.add(AddUserToCategory(user, connectId, category));
+    userBloc.add(AddUserToCategory(user, connectId, categories));
+
+    final connectsBloc = BlocProvider.of<ConnectsBloc>(context);
+    connectsBloc.add(FetchConnects(user.id!));
+  }
+
+  @override
+  void initState() {
+    print(widget.connect.categories);
+    selectedCategories = widget.connect.categories;
+    super.initState();
   }
 
   @override
@@ -596,11 +610,12 @@ class _AddUserToCategoryBSState extends State<AddUserToCategoryBS> {
         return Container(
           width: double.infinity,
           height: MediaQuery.of(context).size.height * 0.5,
+          padding: const EdgeInsets.all(16),
           decoration: const BoxDecoration(
             color: Color(0xFF191919),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
                 "Add to category",
@@ -609,45 +624,54 @@ class _AddUserToCategoryBSState extends State<AddUserToCategoryBS> {
                   color: Colors.white,
                 ),
               ),
-              DropdownButton(
-                value: selectedCategory,
-                isDense: false,
-                dropdownColor: const Color(0xFF191919),
-                items: widget.categories
+              Wrap(
+                spacing: 8,
+                children: widget.categories
                     .map(
-                      (category) => DropdownMenuItem(
-                        value: category,
-                        child: Text(
-                          category,
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
+                      (category) => category != 'All'
+                          ? GestureDetector(
+                              onTap: () {
+                                if (selectedCategories.contains(category)) {
+                                  selectedCategories.remove(category);
+                                } else {
+                                  selectedCategories.add(category);
+                                }
+                                setState(() {});
+                              },
+                              child: Chip(
+                                backgroundColor:
+                                    selectedCategories.contains(category)
+                                        ? Colors.orangeAccent
+                                        : Colors.grey[900],
+                                side: BorderSide.none,
+                                label: Text(
+                                  category,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    color: selectedCategories.contains(category)
+                                        ? Colors.black
+                                        : Colors.white,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
                     )
                     .toList(),
-                onChanged: (value) {
-                  print(value);
-                  selectedCategory = value!;
-                  setState(() {});
-                },
               ),
               BlocBuilder<UserBloc, UserState>(builder: (context, state) {
                 if (state is UserLoaded) {
                   return FilledButton(
                     onPressed: () {
-                      if (selectedCategory != null) {
-                        Navigator.pop(context);
-                        addUserToCategory(
-                          state.user,
-                          widget.connect.id!,
-                          selectedCategory!,
-                        );
-                      }
+                      Navigator.pop(context);
+                      addUserToCategory(
+                        state.user,
+                        widget.connect.id!,
+                        selectedCategories,
+                      );
                     },
                     style: FilledButton.styleFrom(
-                      backgroundColor: const Color(0xFFFFEEBA),
+                      backgroundColor: Colors.orangeAccent,
                     ),
                     child: Text(
                       "Add to Category",

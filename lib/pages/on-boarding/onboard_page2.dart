@@ -85,7 +85,7 @@ class _OnBoardPage2State extends State<OnBoardPage2> {
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SlideInText(
                           value: "Custom Card",
@@ -93,11 +93,11 @@ class _OnBoardPage2State extends State<OnBoardPage2> {
                           weight: FontWeight.bold,
                         ),
                         SizedBox(
-                          height: 15,
+                          height: 8,
                         ),
                         SlideInText(
-                          value: "just for you & your business.",
-                          size: 12,
+                          value: "just for you.",
+                          size: 14,
                           weight: FontWeight.normal,
                         ),
                       ],
@@ -108,23 +108,25 @@ class _OnBoardPage2State extends State<OnBoardPage2> {
                   height: 40,
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    controller: _controller,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: EdgeInsets.only(
-                          left: index == 0
-                              ? MediaQuery.of(context).size.width
-                              : 5,
-                        ),
-                        child: CustomCard(
-                          color: gradients[index],
-                          value: texts2[index],
-                        ),
-                      );
-                    },
+                  child: AbsorbPointer(
+                    child: ListView.builder(
+                      controller: _controller,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 3,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.only(
+                            left: index == 0
+                                ? MediaQuery.of(context).size.width
+                                : 5,
+                          ),
+                          child: CustomCard(
+                            color: gradients[index],
+                            value: texts2[index],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 const Spacer(),
@@ -137,28 +139,30 @@ class _OnBoardPage2State extends State<OnBoardPage2> {
             ),
             Positioned(
               bottom: 100,
-              child: SizedBox(
-                height: 400,
-                width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: ListView.builder(
-                    controller: _controller2,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: EdgeInsets.only(
-                          right: index == 2
-                              ? MediaQuery.of(context).size.width
-                              : 8,
-                        ),
-                        child: CustomCard2(
-                          color: gradients[index],
-                          value: texts[index],
-                        ),
-                      );
-                    },
+              child: AbsorbPointer(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: ListView.builder(
+                      controller: _controller2,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 3,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.only(
+                            right: index == 2
+                                ? MediaQuery.of(context).size.width
+                                : 8,
+                          ),
+                          child: CustomCard2(
+                            color: gradients[index],
+                            value: texts[index],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),

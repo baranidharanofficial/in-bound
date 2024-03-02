@@ -86,16 +86,18 @@ class UserApi {
   }
 
   Future<APIResponse> addUserToCategory(
-      String userId, String connectId, String category) async {
+      String userId, String connectId, List<String> categories) async {
     final url = Uri.parse(
-        'https://inbound-5gka.onrender.com/users/add-user-to-category/$userId/$connectId/$category');
+        'https://inbound-5gka.onrender.com/users/add-user-to-category/$userId/$connectId');
 
-    print(jsonEncode({}));
+    // print(userId);
+    // print(userId);
+    // print({"categories": categories});
 
     try {
       final response = await http.post(
         url,
-        body: jsonEncode({}),
+        body: jsonEncode({"categories": categories}),
         headers: {
           'Content-Type': 'application/json',
         },

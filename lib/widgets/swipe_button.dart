@@ -1,3 +1,4 @@
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:inbound/pages/auth/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +13,11 @@ class SlideToUnlock extends StatefulWidget {
 class _SlideToUnlockState extends State<SlideToUnlock> {
   double currentPosition = 0;
   double unlockPosition = 250;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   void onSlideUpdate(double delta, double width) {
     setState(() {
@@ -75,7 +81,14 @@ class _SlideToUnlockState extends State<SlideToUnlock> {
                   ),
                 ),
               ),
-            ),
+            )
+                .animate(
+                  onPlay: (controller) => controller.repeat(reverse: false),
+                )
+                .shimmer(
+                  color: const Color(0x7C616161),
+                  duration: const Duration(milliseconds: 800),
+                ),
           ),
           Positioned(
             left: currentPosition,
@@ -85,7 +98,7 @@ class _SlideToUnlockState extends State<SlideToUnlock> {
               margin: const EdgeInsets.only(left: 5, top: 5),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(25),
               ),
               child: const Center(
                 child: Icon(

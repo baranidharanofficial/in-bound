@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inbound/bloc/user_bloc.dart';
 import 'package:inbound/firebase_options.dart';
@@ -76,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 2), () {
+      Future.delayed(const Duration(seconds: 3), () {
         fetchUserData();
         Navigator.pushReplacement(
           context,
@@ -95,13 +96,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xFF191919),
+    return Scaffold(
+      backgroundColor: const Color(0xFF191919),
       body: Center(
         child: SlideInText(
-          value: 'InBound.',
-          size: 30,
+          value: 'InBound',
+          size: MediaQuery.of(context).size.width * 0.1,
           weight: FontWeight.bold,
+        ).animate().shimmer(
+          colors: [Colors.orangeAccent, Colors.redAccent],
+          delay: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 2700),
         ),
       ),
     );

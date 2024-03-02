@@ -24,9 +24,9 @@ class AddCategory extends UserEvent {
 class AddUserToCategory extends UserEvent {
   final User user;
   final String connectId;
-  final String category;
+  final List<String> categories;
 
-  AddUserToCategory(this.user, this.connectId, this.category);
+  AddUserToCategory(this.user, this.connectId, this.categories);
 }
 
 abstract class UserState {}

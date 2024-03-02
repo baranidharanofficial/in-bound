@@ -20,14 +20,14 @@ class _OnBoardPageState extends State<OnBoardPage> {
           width: MediaQuery.of(context).size.width,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: const Padding(
                   padding: EdgeInsets.only(left: 16.0, top: 30),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SlideInText(
                         value: "Here we",
@@ -40,7 +40,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
                         weight: FontWeight.bold,
                       ),
                       SlideInText(
-                        value: "cards",
+                        value: "networks",
                         size: 72,
                         weight: FontWeight.bold,
                       ),
@@ -53,6 +53,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
                           value:
                               "wherever you go create meaningful connections and manage them in one place.",
                           size: 16,
+                          align: TextAlign.center,
                           weight: FontWeight.normal,
                         ),
                       ),
@@ -64,7 +65,7 @@ class _OnBoardPageState extends State<OnBoardPage> {
                   ),
                 ),
               ),
-              AnimatedCards(),
+              const AnimatedCards(),
             ],
           ),
         ),
