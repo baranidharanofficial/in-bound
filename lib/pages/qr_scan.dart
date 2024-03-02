@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inbound/bloc/user_bloc.dart';
-import 'package:inbound/bloc/user_event.dart';
 // import 'package:inbound/pages/confirm_page.dart';
 import 'package:inbound/services/connect_service.dart';
 import 'package:inbound/widgets/animated_texts.dart';

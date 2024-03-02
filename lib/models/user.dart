@@ -17,7 +17,7 @@ class User {
   String? medium;
   String? stack;
   String? x;
-  List<String> connects; // List of friend IDs
+  List<String> categories; // List of friend IDs
 
   User({
     this.id,
@@ -38,12 +38,12 @@ class User {
     this.medium,
     this.stack,
     this.x,
-    required this.connects,
+    required this.categories,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['_id'],
+      id: json['_id'] ?? json['id'] ?? "",
       uid: json['uid'],
       name: json['name'],
       email: json['email'],
@@ -61,7 +61,7 @@ class User {
       medium: json['medium'] ?? "",
       stack: json['stack'] ?? "",
       x: json['x'] ?? "",
-      connects: List<String>.from(json['connects'] ?? []),
+      categories: List<String>.from(json['categories'] ?? []),
     );
   }
 
@@ -84,7 +84,7 @@ class User {
       'medium': medium,
       'stack': stack,
       'x': x,
-      'connects': connects,
+      'connects': categories,
     };
   }
 }
@@ -97,4 +97,20 @@ class APIResponse {
     required this.statusCode,
     required this.data,
   });
+}
+
+class Connect {
+  final List<User> connects;
+  final List<String> categories;
+
+  Connect({required this.connects, required this.categories});
+
+  factory Connect.fromJson(Map<String, dynamic> json) {
+    return Connect(
+      connects: (json['connects'] as List<dynamic>)
+          .map((connectJson) => User.fromJson(connectJson))
+          .toList(),
+      categories: List<String>.from(json['categories']),
+    );
+  }
 }

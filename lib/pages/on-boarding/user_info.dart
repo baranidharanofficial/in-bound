@@ -324,7 +324,7 @@ class _UserInfoPageState extends State<UserInfoPage> {
                       portfolio: portfolioController.text,
                       linkedin: linkedinController.text,
                       instagram: instaController.text,
-                      connects: [],
+                      categories: [],
                     );
 
                     print(data);

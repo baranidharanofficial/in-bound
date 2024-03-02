@@ -1,17 +1,15 @@
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inbound/bloc/user_bloc.dart';
-import 'package:inbound/bloc/user_event.dart';
 import 'package:inbound/models/user.dart';
 import 'package:inbound/pages/home.dart';
 import 'package:inbound/pages/on-boarding/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:inbound/services/user_service.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class PreviewPage extends StatefulWidget {
-  final User? user;
+  final User user;
   const PreviewPage({super.key, required this.user});
 
   @override
@@ -34,9 +32,9 @@ class _PreviewPageState extends State<PreviewPage> {
     super.initState();
   }
 
-  fetchUserData(User user) {
+  addUser(User user) {
     final userBloc = BlocProvider.of<UserBloc>(context);
-    userBloc.add(FetchUser(user.uid));
+    userBloc.add(AddUser(user));
 
     Navigator.push(
       context,
@@ -110,7 +108,7 @@ class _PreviewPageState extends State<PreviewPage> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              widget.user!.name,
+                                              widget.user.name,
                                               textAlign: TextAlign.left,
                                               style: GoogleFonts.gantari(
                                                 fontSize: 30,
@@ -150,7 +148,7 @@ class _PreviewPageState extends State<PreviewPage> {
                                         ),
                                         child: Center(
                                           child: QrImageView(
-                                            data: widget.user!.uid,
+                                            data: widget.user.uid,
                                             version: QrVersions.auto,
                                             gapless: false,
                                             size: MediaQuery.of(context)
@@ -209,7 +207,7 @@ class _PreviewPageState extends State<PreviewPage> {
                                         ),
                                       ),
                                       Text(
-                                        widget.user!.role,
+                                        widget.user.role,
                                         style: GoogleFonts.gantari(
                                           fontSize: 50.0,
                                           fontWeight: FontWeight.w600,
@@ -219,7 +217,7 @@ class _PreviewPageState extends State<PreviewPage> {
                                         height: 8,
                                       ),
                                       Text(
-                                        "at ${widget.user!.company}",
+                                        "at ${widget.user.company}",
                                         style: GoogleFonts.gantari(
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.w600,
@@ -282,7 +280,7 @@ class _PreviewPageState extends State<PreviewPage> {
                                         height: 8,
                                       ),
                                       Text(
-                                        widget.user!.email,
+                                        widget.user.email,
                                         style: GoogleFonts.gantari(
                                           fontSize: 12.0,
                                           fontWeight: FontWeight.w600,
@@ -293,7 +291,7 @@ class _PreviewPageState extends State<PreviewPage> {
                                         height: 4,
                                       ),
                                       Text(
-                                        widget.user!.phone,
+                                        widget.user.phone,
                                         style: GoogleFonts.gantari(
                                           fontSize: 12.0,
                                           fontWeight: FontWeight.w600,
@@ -313,14 +311,8 @@ class _PreviewPageState extends State<PreviewPage> {
               ),
               const Spacer(),
               TextButton(
-                onPressed: () async {
-                  UserService userService = UserService();
-
-                  User? user = await userService.createUser(widget.user!);
-
-                  if (user != null) {
-                    fetchUserData(user);
-                  }
+                onPressed: () {
+                  addUser(widget.user);
                 },
                 child: Container(
                   height: 80,

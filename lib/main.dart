@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inbound/bloc/user_bloc.dart';
-import 'package:inbound/bloc/user_event.dart';
 import 'package:inbound/firebase_options.dart';
 import 'package:inbound/pages/auth/login_page.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +45,9 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider<SenderBloc>(
           create: (context) => SenderBloc(_userService),
+        ),
+        BlocProvider<ConnectsBloc>(
+          create: (context) => ConnectsBloc(_userService),
         ),
         // Add more BlocProviders as needed
       ],

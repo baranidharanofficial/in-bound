@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inbound/bloc/user_bloc.dart';
-import 'package:inbound/bloc/user_event.dart';
 import 'package:inbound/pages/edit_user.dart';
 import 'package:inbound/pages/qr_scan.dart';
 import 'package:flutter/material.dart';

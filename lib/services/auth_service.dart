@@ -18,11 +18,6 @@ class AuthService extends ChangeNotifier {
 
       localStoreSetUId(userCredential.user!.uid);
 
-      _firebaseFirestore.collection('users').doc(userCredential.user!.uid).set({
-        'uid': userCredential.user!.uid,
-        'email': email,
-      }, SetOptions(merge: true));
-
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e.code);

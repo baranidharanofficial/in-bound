@@ -2,7 +2,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inbound/bloc/user_bloc.dart';
-import 'package:inbound/bloc/user_event.dart';
 import 'package:inbound/pages/card_page.dart';
 import 'package:inbound/pages/confirm_page.dart';
 import 'package:inbound/pages/connections.dart';
@@ -24,6 +23,11 @@ class _HomePageState extends State<HomePage> {
     const ConnectionsPage(),
     const SettingsPage(),
   ];
+
+  fetchConnects(String userId) async {
+    final connectsBloc = BlocProvider.of<ConnectsBloc>(context);
+    connectsBloc.add(FetchConnects(userId));
+  }
 
   int _currentindex = 0;
   final ChatService _chatService = ChatService();
@@ -106,6 +110,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       IconButton(
                                         onPressed: () {
+                                          fetchConnects(state.user.id!);
                                           _currentindex = 1;
                                           setState(() {});
                                         },

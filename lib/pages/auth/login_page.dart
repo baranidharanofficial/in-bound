@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inbound/bloc/user_bloc.dart';
-import 'package:inbound/bloc/user_event.dart';
 import 'package:inbound/pages/home.dart';
 import 'package:inbound/pages/on-boarding/onboard_page.dart';
 import 'package:inbound/pages/auth/register_page.dart';
